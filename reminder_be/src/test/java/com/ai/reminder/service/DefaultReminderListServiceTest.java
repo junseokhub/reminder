@@ -40,6 +40,7 @@ public class DefaultReminderListServiceTest {
         userList = reminderListRepository.save(ReminderList.builder()
                 .name("업무")
                 .color("#FF3830")
+                .isDefault(false)
                 .build());
     }
 

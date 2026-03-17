@@ -1,4 +1,4 @@
-package com.ai.reminder.service.in;
+package com.ai.reminder.service.ports.in;
 
 import com.ai.reminder.domain.ReminderList;
 

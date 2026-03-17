@@ -2,7 +2,7 @@ package com.ai.reminder.service;
 
 import com.ai.reminder.domain.ReminderList;
 import com.ai.reminder.repository.ReminderListRepository;
-import com.ai.reminder.service.in.ReminderListService;
+import com.ai.reminder.service.ports.in.ReminderListService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
