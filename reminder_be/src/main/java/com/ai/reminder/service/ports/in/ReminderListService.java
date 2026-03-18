@@ -8,7 +8,7 @@ public interface ReminderListService {
 
     List<ReminderList> findAll();
     ReminderList findById(Long id);
-    ReminderList save(String name, String color);
+    ReminderList create(String name, String color);
     ReminderList update(Long id, String name, String color);
     void delete(Long id);
 }

@@ -37,7 +37,7 @@ public class ReminderListController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ReminderListResponse create(@Valid @RequestBody ReminderListRequest request) {
-        var list = reminderListService.save(request.name(), request.color());
+        var list = reminderListService.create(request.name(), request.color());
         return ReminderListResponse.from(list, 0);
     }
 

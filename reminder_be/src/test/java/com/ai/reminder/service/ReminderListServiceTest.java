@@ -82,7 +82,7 @@ class ReminderListServiceTest {
     @Test
     @DisplayName("새 목록을 생성할 수 있다")
     void create() {
-        var result = service.save("개인", "#34C759");
+        var result = service.create("개인", "#34C759");
 
         assertThat(result.getId()).isNotNull();
         assertThat(result.getName()).isEqualTo("개인");
