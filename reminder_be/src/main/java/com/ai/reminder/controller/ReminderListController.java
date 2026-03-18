@@ -2,6 +2,7 @@ package com.ai.reminder.controller;
 
 import com.ai.reminder.dto.ReminderListRequest;
 import com.ai.reminder.dto.ReminderListResponse;
+import com.ai.reminder.repository.ReminderRepository;
 import com.ai.reminder.service.ports.in.ReminderListService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -13,31 +14,38 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/lists")
 @RequiredArgsConstructor
-public class RemindListController {
+public class ReminderListController {
 
     private final ReminderListService reminderListService;
+    private final ReminderRepository reminderRepository;
 
-    @GetMapping()
+    @GetMapping
     public List<ReminderListResponse> findAll() {
         return reminderListService.findAll().stream()
-                .map(ReminderListResponse::from)
+                .map(list -> ReminderListResponse.from(list,
+                        reminderRepository.countByListIdAndCompletedFalse(list.getId())))
                 .toList();
     }
 
     @GetMapping("/{id}")
     public ReminderListResponse findById(@PathVariable Long id) {
-        return ReminderListResponse.from(reminderListService.findById(id));
+        var list = reminderListService.findById(id);
+        return ReminderListResponse.from(list,
+                reminderRepository.countByListIdAndCompletedFalse(list.getId()));
     }
 
-    @PostMapping()
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ReminderListResponse create(@Valid @RequestBody ReminderListRequest request) {
-        return ReminderListResponse.from(reminderListService.save(request.name(), request.color()));
+        var list = reminderListService.save(request.name(), request.color());
+        return ReminderListResponse.from(list, 0);
     }
 
     @PutMapping("/{id}")
-    public ReminderListResponse update(@PathVariable Long id, @RequestBody ReminderListRequest request) {
-        return ReminderListResponse.from(reminderListService.update(id, request.name(), request.color()));
+    public ReminderListResponse update(@PathVariable Long id, @Valid @RequestBody ReminderListRequest request) {
+        var list = reminderListService.update(id, request.name(), request.color());
+        return ReminderListResponse.from(list,
+                reminderRepository.countByListIdAndCompletedFalse(list.getId()));
     }
 
     @DeleteMapping("/{id}")

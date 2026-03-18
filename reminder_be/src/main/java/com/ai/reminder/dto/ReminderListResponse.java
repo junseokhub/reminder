@@ -9,15 +9,17 @@ public record ReminderListResponse(
         String name,
         String color,
         boolean isDefault,
+        long reminderCount,
         LocalDateTime createdAt,
         LocalDateTime updatedAt
 ) {
-    public static ReminderListResponse from(ReminderList list) {
+    public static ReminderListResponse from(ReminderList list, long reminderCount) {
         return new ReminderListResponse(
                 list.getId(),
                 list.getName(),
                 list.getColor(),
                 list.isDefault(),
+                reminderCount,
                 list.getCreatedAt(),
                 list.getUpdatedAt()
         );
